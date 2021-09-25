@@ -1,5 +1,5 @@
 <template>
-  <form class="card auth-card" @click.prevent="submitHandler">
+  <form class="card auth-card" @submit.prevent="submitHandler">
     <div class="card-content">
       <span class="card-title">Домашняя бухгалтерия</span>
       <div class="input-field">
@@ -62,6 +62,7 @@
 
 <script>
 import { email, minLength, required } from 'vuelidate/lib/validators'
+import messages from '../utils/messages'
 
 export default {
   data: () => ({
@@ -85,6 +86,11 @@ export default {
       }
       console.log(formData)
       this.$router.push('/')
+    }
+  },
+  mounted () {
+    if (messages[this.$route.query.message]) {
+      this.$message(messages[this.$route.query.message])
     }
   }
 }
