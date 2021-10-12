@@ -6,7 +6,7 @@ export default {
       /* eslint-disable */
       try {
         const auth = getAuth();
-        await signInWithEmailAndPassword(email, password)
+        await signInWithEmailAndPassword(auth, email, password)
       } catch (e) {
         throw e
       }
