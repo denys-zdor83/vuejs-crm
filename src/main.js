@@ -19,6 +19,7 @@ Vue.use(MessagePlugin)
 const firebaseConfig = {
   apiKey: 'AIzaSyDcRgvCZp6JaluyAnxjc4axvT267hmQssQ',
   authDomain: 'vuejs-crm-5d8d1.firebaseapp.com',
+  databaseURL: 'https://vuejs-crm-5d8d1-default-rtdb.europe-west1.firebasedatabase.app',
   projectId: 'vuejs-crm-5d8d1',
   storageBucket: 'vuejs-crm-5d8d1.appspot.com',
   messagingSenderId: '614013795172',
@@ -26,13 +27,13 @@ const firebaseConfig = {
 }
 
 initializeApp(firebaseConfig)
-const auth = getAuth()
 
-let app
+const auth = getAuth()
+let myApp
 
 onAuthStateChanged(auth, (user) => {
-  if (!app) {
-    app = new Vue({
+  if (!myApp) {
+    myApp = new Vue({
       router,
       store,
       render: h => h(App)
