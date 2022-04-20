@@ -89,9 +89,7 @@ export default {
       try {
         await this.$store.dispatch('login', formData)
         this.$router.push('/')
-      } catch (e) {
-        throw e
-      }
+      } catch (e) {}
       /* eslint-disable */
 
     }
