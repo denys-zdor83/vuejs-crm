@@ -1,15 +1,39 @@
-import { signInWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../firebase-config'
+import {
+  signInWithEmailAndPassword,
+  signOut,
+  createUserWithEmailAndPassword
+} from 'firebase/auth'
+import { ref, set } from 'firebase/database'
+import { auth, database } from '../firebase-config'
 
 export default {
   actions: {
-    async login ({ dispatch, commit }, { email, password }) {
+    async login ({ commit }, { email, password }) {
       /* eslint-disable */
       try {
         const user = await signInWithEmailAndPassword(auth, email, password)
-        console.log(user)
       } catch (e) {
         console.log(e.message)
+        commit('setError', e.message)
+        throw e
+      }
+      /* eslint-enable */
+    },
+    async logout () {
+      await signOut(auth)
+    },
+    async register ({ commit }, { email, password, name }) {
+      /* eslint-disable */
+      try {
+        const user = await createUserWithEmailAndPassword(auth, email, password)
+        console.log(user)
+        set(ref(database, 'users/' + user.user.uid + '/info'), {
+          bill: 10090,
+          name
+        })
+      } catch (e) {
+        console.log(e.message)
+        commit('setError', e.message)
         throw e
       }
       /* eslint-enable */

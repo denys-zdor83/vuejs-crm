@@ -17,8 +17,8 @@ Vue.use(Vuelidate)
 Vue.use(MessagePlugin)
 
 let app
-
 onAuthStateChanged(auth, (user) => {
+  console.log('main', 'user = ', user, 'app = ', app)
   if (!app) {
     app = new Vue({
       router,
