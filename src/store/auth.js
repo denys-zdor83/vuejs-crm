@@ -22,12 +22,13 @@ export default {
     async logout () {
       await signOut(auth)
     },
-    async register ({ commit }, { email, password, name }) {
-      /* eslint-disable */
+    /* eslint-disable */
+    async register ({ commit, dispatch }, { email, password, name }) {
+      console.log(auth)
       try {
-        const user = await createUserWithEmailAndPassword(auth, email, password)
-        console.log(user)
-        set(ref(database, 'users/' + user.user.uid + '/info'), {
+        await createUserWithEmailAndPassword(auth, email, password)
+        const uid = await dispatch('getUid')
+        set(ref(database, 'users/' + uid + '/info'), {
           bill: 10090,
           name
         })
@@ -36,7 +37,12 @@ export default {
         commit('setError', e.message)
         throw e
       }
-      /* eslint-enable */
+    },
+    getUid () {
+      debugger
+      const user = auth.currentUser
+      return user ? user.uid : null
     }
+    /* eslint-enable */
   }
 }
